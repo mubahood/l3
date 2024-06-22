@@ -1,0 +1,11 @@
+
+php artisan make:migration add_missing_fields_to_weather_subscriptions --table=weather_subscriptions
+php artisan make:migration seed_settings_menus
+php artisan admin:make FarmerController --model=App\\Models\\Farmers\\Farmer
+php artisan admin:make WeatherOutboxController --model=App\\Models\\Weather\\WeatherOutbox
+
+php artisan make:model WeatherOutbox -m
+
+php artisan make:seeder OnlineCourseStudentBatchImporter
+
+ 
