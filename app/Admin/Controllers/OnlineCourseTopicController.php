@@ -30,7 +30,7 @@ class OnlineCourseTopicController extends AdminController
             $filter->equal('online_course_id', 'Course')->select(\App\Models\OnlineCourse::getDropDownList());
         });
         $grid->quickSearch('title')->placeholder('Search by title');
-     
+
         $grid->column('position', __('Position'))
             ->sortable()
             ->editable()
@@ -75,12 +75,18 @@ class OnlineCourseTopicController extends AdminController
             })
             ->sortable();
 
-       /*  $grid->column('summary', __('Quiz Correct Answer'))
+        /*  $grid->column('summary', __('Quiz Correct Answer'))
             ->label([
                 '1' => 'Press 1',
                 '2' => 'Press 2',
             ])
             ->sortable(); */
+        //call 
+        $grid->column('action', __('Action'))
+            ->display(function () {
+                $action = '<a href="' . url('make-calls?topic_id=' . $this->id) . '" class="btn btn-xs btn-primary" target="_blank">Make Calls</a>';
+                return $action;
+            });
 
 
         return $grid;
@@ -137,11 +143,11 @@ class OnlineCourseTopicController extends AdminController
             ->rules('required')
             ->uniqueName()
             ->attribute(['accept' => 'audio/*']);
-      /*   $form->file('video_url', __('Quiz Question Audio'))
+        /*   $form->file('video_url', __('Quiz Question Audio'))
             ->rules('required')
             ->uniqueName()
             ->attribute(['accept' => 'audio/*']); */
-/* 
+        /* 
         $form->radio('summary', __('Quiz Correct Answer'))
             ->options([
                 '1' => 'Press 1',

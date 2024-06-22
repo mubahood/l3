@@ -174,6 +174,69 @@ use Illuminate\Support\Facades\Auth;
 */
 
 
+Route::get('make-calls', function () {
+    $online_course_topic_id = 0;
+    $conds = [];
+    if (isset($_GET['topic_id'])) {
+        $conds['online_course_topic_id'] = $online_course_topic_id;
+    }
+    if (isset($_GET['lesson_id'])) {
+        $conds['id'] = $_GET['lesson_id'];
+    }
+
+    $lesssons = OnlineCourseLesson::where($conds)->get();
+
+    $i = 0;
+    foreach ($lesssons as $key => $lessson) {
+        if ($lessson->status == 'Attended') {
+            //continue;
+        }
+        $phone = $lessson->student->phone;
+        $client = new \GuzzleHttp\Client();
+        $response = $client->request('POST', 'https://voice.africastalking.com/call', [
+            'headers' => [
+                'Accept' => 'application/json',
+                'Content-Type' => 'application/x-www-form-urlencoded',
+                'apiKey' => env('AT_KEY'),
+            ],
+            'form_params' => [
+                'username' => env('AT_USERNAME'),
+                'to' => $phone,
+                'from' => env('AT_PHONE'),
+                'apiKey' => env('AT_KEY'),
+            ]
+        ]);
+        $i++;
+        echo $i . ". Called: $phone <br>";
+    }
+    die("<br>====done====");
+    /* 
+       "id" => 41
+    "created_at" => "2024-06-23 01:46:41"
+    "updated_at" => "2024-06-23 02:08:03"
+    "online_course_topic_id" => 10
+    "online_course_id" => 1
+    "student_id" => "9"
+    "instructor_id" => "40"
+    "sheduled_at" => "2024-06-24 01:46:41"
+    "attended_at" => "2024-06-23 02:08:03"
+    "position" => 1
+    "status" => "Attended"
+    "has_error" => null
+    "error_message" => null
+    "details" => null
+    "student_audio_question" => null
+    "instructor_audio_question" => null
+    "student_quiz_answer" => "Not Answered"
+    "quiz_answer_status" => "Not Answered"
+    "has_reminder_call" => "No"
+    "reminder_date" => null
+    "has_answer" => "No"
+    "student_listened_to_answer" => "No"
+    */
+    die("tome to make calls");
+});
+
 Route::get('test', function () {
     Utils::renew_messages();
 });
@@ -183,8 +246,8 @@ Route::get('boot-system', function () {
     Utils::process_weather_subs(true);
     Utils::process_market_subs(true);
     Utils::renew_messages(true);
-    
-    Utils::system_boot();  
+
+    Utils::system_boot();
     die('done');
 });
 
@@ -367,7 +430,7 @@ Route::get('market-info-message-campaigns-send-now', function () {
         }
         Utils::send_sms($recipient, $outbox->message);
         $outbox->status = 'Sent';
-        $outbox->sent_at = Carbon::now(); 
+        $outbox->sent_at = Carbon::now();
         $outbox->save();
         echo "$i. Successfully sent to $recipient <br>";
     }

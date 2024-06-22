@@ -28,7 +28,7 @@ class OnlineCourseLessonController extends AdminController
     protected function grid()
     {
         $grid = new Grid(new OnlineCourseLesson());
-       
+
 
         //add on top of the grid html data
         /* $grid->header(function ($query) {
@@ -191,8 +191,12 @@ class OnlineCourseLessonController extends AdminController
                 }
                 return 'No Answer';
             });
-        $grid->column('student_listened_to_answer', __('Listened to Answer'))->sortable();
-        $grid->column('has_answer', __('Has Answer'))->sortable();
+
+        $grid->column('action', __('Action'))
+            ->display(function () {
+                $action = '<a href="' . url('make-calls?lesson_id=' . $this->id) . '" class="btn btn-xs btn-primary" target="_blank">Call Now</a>';
+                return $action;
+            });
         return $grid;
     }
 
@@ -242,6 +246,8 @@ class OnlineCourseLessonController extends AdminController
                 'Pending' => 'Pending',
                 'Attended' => 'Attended',
             ]);
+
+        return $form;
 
         $id = request()->route('online_course_lesson');
         if ((int)($id) > 0) {

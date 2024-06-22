@@ -77,4 +77,7 @@ class OnlineCourseTopic extends Model
 
         return $data;
     }
+
+    //has manu students
+    
 }

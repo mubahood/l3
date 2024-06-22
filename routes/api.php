@@ -625,7 +625,7 @@ Route::post('/online-course-api', function (Request $r) {
             $session->digit = $CODE_QUESTION_MENU;
             if ($r->goToNext != 1) {
                 $session->digit = $CODE_LESSON_MENU;
-            } 
+            }
             $session->save();
             Utils::resp_v2([
                 'isLesson' => true,
