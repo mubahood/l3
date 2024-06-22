@@ -417,13 +417,13 @@ Route::post('/online-course-api', function (Request $r) {
             'headers' => [
                 'Accept' => 'application/json',
                 'Content-Type' => 'application/x-www-form-urlencoded',
-                'apiKey' => '96813c0c9bba6dc78573be66f4965e634e636bee86ffb23ca6d2bebfd9b177bd',
+                'apiKey' => env('AT_KEY'),
             ],
             'form_params' => [
-                'username' => 'dninsiima',
+                'username' => env('AT_USERNAME'),
                 'to' => $r->callerNumber,
-                'from' => '+256323200710',
-                'apiKey' => '96813c0c9bba6dc78573be66f4965e634e636bee86ffb23ca6d2bebfd9b177bd',
+                'from' => env('AT_PHONE'),
+                'apiKey' => env('AT_KEY'),
             ]
         ]);
         header('Content-type: text/plain');
