@@ -209,7 +209,7 @@ Route::group([
         Route::post("weather-packages-subscribe", [ApiShopController::class, "weather_packages_subscribe"]);
         Route::get("languages", [ApiShopController::class, "languages"]);
         /*==============END OF Market Information Endpoints==============*/
- 
+
         /*==============START OF Insurance Endpoints==============*/
         Route::get("insurance_regions", [InsuranceAPIController::class, "regions"]);
         Route::post("get_region_supported_crops", [InsuranceAPIController::class, "get_region_supported_crops"]);
@@ -410,8 +410,21 @@ Route::get('/online-make-reminder-calls', function (Request $r) {
     die("No students to call");
 });
 Route::post('/online-course-api', function (Request $r) {
+    $CODE_MAIN_MENU = 1;
+    $CODE_LESSON_MENU = 2;
+    $CODE_QUESTION_MENU = 3;
 
     if ($r->direction == 'Inbound') {
+
+        $phone = Utils::prepare_phone_number($r->callerNumber);
+        $student = OnlineCourseStudent::where(['phone' => $phone])->first();
+        $project_name = 'Life Long Learning for Farmers';
+        $project_number = '0701489296';
+        //check if number is not found
+        if ($student == null) {
+            Utils::my_resp('text', 'You are not enrolled to any course yet. Please contact ' . $project_name . ' on ' . $project_number . ' to get yourself enrolled to online farm courses today. Thank you.');
+        }
+
         $client = new \GuzzleHttp\Client();
         $response = $client->request('POST', 'https://voice.africastalking.com/call', [
             'headers' => [
@@ -433,8 +446,6 @@ Route::post('/online-course-api', function (Request $r) {
         die();
         return;
     }
-
-
 
     if (!isset($r->sessionId)) {
         Utils::my_resp('text', 'No session id');
@@ -540,12 +551,6 @@ Route::post('/online-course-api', function (Request $r) {
 
 
 
-
-    /*     if ($session->Answered != 'Answered') {
-        return;
-    } */
-
-
     $phone = Utils::prepare_phone_number($session->callerNumber);
     $user = OnlineCourseStudent::where(['phone' => $phone])->first();
     $student = $user;
@@ -569,7 +574,8 @@ Route::post('/online-course-api', function (Request $r) {
     $lesson = null;
 
     $done_lesson = \App\Models\OnlineCourseLesson::where('student_id', $student->id)
-        ->where('status', 'Attended')
+        /* ->where('status', 'Attended') */
+        ->orderBy('created_at', 'desc')
         ->first();
     if ($done_lesson != null) {
         //check if attended_at is today
@@ -580,15 +586,22 @@ Route::post('/online-course-api', function (Request $r) {
         }
     }
 
+
+    $course = null;
     if ($lesson == null) {
         //get any latest pending lesson
         $_lesson = \App\Models\OnlineCourseLesson::where('student_id', $student->id)
-            ->where('status', 'Pending')
-            ->orderBy('position', 'asc')
+            /*             ->where('status', 'Pending')
+            ->orderBy('position', 'asc') */
+            ->orderBy('created_at', 'desc')
             ->first();
+        $course = $_lesson->onlineCourse;
         if ($_lesson != null) {
             $lesson = $_lesson;
         } else {
+            $lesson = null;
+        }
+        if ($course == null) {
             $lesson = null;
         }
     }
@@ -598,6 +611,48 @@ Route::post('/online-course-api', function (Request $r) {
         Utils::my_resp('text', 'You have no pending lesson for today. Please call tomorrow to listen to your next lesson');
         return;
     }
+
+    if ($r->callSessionState == 'Answered') {
+        Utils::resp_v2([
+            'isMainMenu' => true,
+            'student' => $student,
+        ]);
+        return;
+    }
+
+    if ($previous_digit == $CODE_LESSON_MENU) {
+        if ($digit == 1) {
+            $session->digit = $CODE_QUESTION_MENU;
+            if ($r->goToNext != 1) {
+                $session->digit = $CODE_LESSON_MENU;
+            } 
+            $session->save();
+            Utils::resp_v2([
+                'isLesson' => true,
+                'student' => $student,
+                'lesson' => $lesson,
+            ]);
+            return;
+        }
+    }
+
+    if ($previous_digit == $CODE_MAIN_MENU) {
+        if ($digit == 1) {
+            $session->digit = $CODE_LESSON_MENU;
+            if ($r->goToNext != 1) {
+                $session->digit = $CODE_MAIN_MENU;
+            }
+            $session->save();
+            Utils::resp_v2([
+                'isLesson' => true,
+                'student' => $student,
+                'lesson' => $lesson,
+            ]);
+            return;
+        }
+    }
+
+
 
     if ($previous_digit == 6) {
         $lesson->student_audio_question = $recordingUrl;

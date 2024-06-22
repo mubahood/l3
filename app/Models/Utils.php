@@ -1221,6 +1221,69 @@ class Utils
     }
 
 
+    public static function resp_v2($params = [])
+    {
+        if (!is_array(($params))) {
+            $params = [];
+        }
+        $type = isset($params['type']) ? $params['type'] : 'text';
+        $data = isset($params['data']) ? $params['data'] : 'Hello';
+        $student = isset($params['student']) ? $params['student'] : null;
+        $prefixContent = isset($params['prefixContent']) ? $params['prefixContent'] : '';
+        $menu = isset($params['menu']) ? $params['menu'] : null;
+        $lesson_url = isset($params['lesson_url']) ? $params['lesson_url'] : null;
+        $topic = isset($params['topic']) ? $params['topic'] : null;
+        $lesson = isset($params['lesson']) ? $params['lesson'] : null;
+        $isMainMenu = isset($params['isMainMenu']) ? $params['isMainMenu'] : false;
+        $isLesson = isset($params['isLesson']) ? $params['isLesson'] : false;
+
+        $content = '';
+        if ($isMainMenu) {
+            $course = $student->onlineCourse;
+            $url = asset('storage/' . $course->audio_url);
+            $content .= '<GetDigits timeout="20" numDigits="1" > 
+                            <Play url="' . $url . '" />
+                        </GetDigits>
+                        <Say>We did not get your input number. Good bye</Say>';
+        }
+
+        if ($lesson != null && $lesson->onlineCourseTopic != null) {
+            $lesson_url = asset('storage/' . $lesson->onlineCourseTopic->audio_url);
+            $content .= '<Play url="' . $lesson_url . '" />';
+            $menu = OnlineCourseMenu::where([
+                'name' => 'Lesson over menu'
+            ])->first();
+            if ($menu != null) {
+                $url = asset('storage/' . $menu->english_audio);
+                if ($student != null) {
+                    $audio_1 = null;
+                    try {
+                        $audio_1 = $student->get_menu_audio_url($menu);
+                    } catch (\Throwable $th) {
+                    }
+                    if ($audio_1 != null && strlen($audio_1) > 4) {
+                        $url = $audio_1;
+                    }
+                }
+                $content .=
+                    '<GetDigits timeout="20" numDigits="1" > 
+                            <Play url="' . $lesson_url . '" />
+                        </GetDigits>';
+                //did not get input
+                $content .= '<Say>We did not get your input number. Good bye</Say>';
+            }
+        }
+
+        header('Content-type: text/plain');
+        echo '<Response>';
+        echo $prefixContent;
+        echo $content;
+        echo '</Response>';
+    }
+
+
+
+
     public static function my_resp_digits($type, $data, $student = null, $prefixContent = '')
     {
         header('Content-type: text/plain');

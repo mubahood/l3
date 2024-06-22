@@ -52,7 +52,7 @@ class OnlineCourseTopicController extends AdminController
                     </audio>';
                 }
             })->sortable();
-        $grid->column('video_url', __('Quiz Question Audio'))
+        /* $grid->column('video_url', __('Quiz Question Audio'))
             ->display(function ($audio_url) {
                 if ($audio_url) {
                     //check if not null and not empty
@@ -65,7 +65,7 @@ class OnlineCourseTopicController extends AdminController
                     Your browser does not support the audio element.
                     </audio>';
                 }
-            })->sortable();
+            })->sortable(); */
         $grid->column('online_course_id', __('Course'))
             ->display(function ($online_course_id) {
                 $course = \App\Models\OnlineCourse::find($online_course_id);
@@ -75,12 +75,12 @@ class OnlineCourseTopicController extends AdminController
             })
             ->sortable();
 
-        $grid->column('summary', __('Quiz Correct Answer'))
+       /*  $grid->column('summary', __('Quiz Correct Answer'))
             ->label([
                 '1' => 'Press 1',
                 '2' => 'Press 2',
             ])
-            ->sortable();
+            ->sortable(); */
 
 
         return $grid;
@@ -137,18 +137,18 @@ class OnlineCourseTopicController extends AdminController
             ->rules('required')
             ->uniqueName()
             ->attribute(['accept' => 'audio/*']);
-        $form->file('video_url', __('Quiz Question Audio'))
+      /*   $form->file('video_url', __('Quiz Question Audio'))
             ->rules('required')
             ->uniqueName()
-            ->attribute(['accept' => 'audio/*']);
-
+            ->attribute(['accept' => 'audio/*']); */
+/* 
         $form->radio('summary', __('Quiz Correct Answer'))
             ->options([
                 '1' => 'Press 1',
                 '2' => 'Press 2',
                 '3' => 'Press 3',
             ])
-            ->rules('required');
+            ->rules('required'); */
 
         /*         $form->quill('details', __('Details'));
         $form->image('image', __('Image'));
