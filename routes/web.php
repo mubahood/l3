@@ -197,7 +197,7 @@ Route::get('password-reset-link', function (Request $r) {
     return redirect($url);
 });
 
-/* Route::get('auth/login', function () {
+Route::get('auth/login', function () {
     $u = Admin::user();
     if ($u != null) {
         return redirect(url('/'));
@@ -206,7 +206,7 @@ Route::get('password-reset-link', function (Request $r) {
     return view('auth.login');
     // return view('welcome');
     //return redirect('/home');
-}); */
+});
 
 Route::post('auth/password-reset-form', function (Request $r) {
     $password = trim($r->password);
