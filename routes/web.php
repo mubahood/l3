@@ -178,7 +178,7 @@ Route::get('make-calls', function () {
     $online_course_topic_id = 0;
     $conds = [];
     if (isset($_GET['topic_id'])) {
-        $conds['online_course_topic_id'] = $online_course_topic_id;
+        $conds['online_course_topic_id'] = $_GET['topic_id'];
     }
     if (isset($_GET['lesson_id'])) {
         $conds['id'] = $_GET['lesson_id'];
