@@ -612,6 +612,8 @@ Route::post('/online-course-api', function (Request $r) {
         return;
     }
 
+    $lesson->status = 'Attended';
+    $lesson->attended_at = date('Y-m-d H:i:s');
     Utils::resp_v2([
         'isLesson' => true,
         'student' => $student,
