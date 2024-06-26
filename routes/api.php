@@ -612,6 +612,13 @@ Route::post('/online-course-api', function (Request $r) {
         return;
     }
 
+    Utils::resp_v2([
+        'isLesson' => true,
+        'student' => $student,
+        'lesson' => $lesson,
+    ]);
+    return;
+
     if ($r->callSessionState == 'Answered') {
         Utils::resp_v2([
             'isMainMenu' => true,
