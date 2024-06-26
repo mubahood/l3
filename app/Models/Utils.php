@@ -1265,12 +1265,12 @@ class Utils
                         $url = $audio_1;
                     }
                 }
-                $content .=
+                /* $content .=
                     '<GetDigits timeout="20" numDigits="1" > 
                             <Play url="' . $lesson_url . '" />
                         </GetDigits>';
                 //did not get input
-                $content .= '<Say>We did not get your input number. Good bye</Say>';
+                $content .= '<Say>We did not get your input number. Good bye</Say>'; */
             }
         }
 
