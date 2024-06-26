@@ -298,8 +298,8 @@ class Utils
     public static  function send_sms($phone, $sms)
     {
 
+        return true; 
         if (Utils::isLocalhost()) {
-            return true;
         }
         $phone = Utils::prepare_phone_number($phone);
         if (Utils::phone_number_is_valid($phone) == false) {
