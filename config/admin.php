@@ -8,29 +8,29 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | AgriHub name
+    | L3Fuganda name
     |--------------------------------------------------------------------------
     |
-    | This value is the name of AgriHub, This setting is displayed on the
+    | This value is the name of L3Fuganda, This setting is displayed on the
     | login page.
     |
     */
-    'name' => 'AgriHub',
+    'name' => 'L3Fuganda',
 
     /*
     |--------------------------------------------------------------------------
-    | AgriHub logo
+    | L3Fuganda logo
     |--------------------------------------------------------------------------
     |
     | The logo of all admin pages. You can also set it as an image by using a
     | `img` tag, eg '<img src="http://logo-url" alt="Admin logo">'.
     |
     */
-    'logo' => '<b>AgriHub</b> admin',
+    'logo' => '<b>L3Fuganda</b> admin',
 
     /*
     |--------------------------------------------------------------------------
-    | AgriHub mini logo
+    | L3Fuganda mini logo
     |--------------------------------------------------------------------------
     |
     | The logo of all admin pages when the sidebar menu is collapsed. You can
@@ -38,21 +38,21 @@ return [
     | '<img src="http://logo-url" alt="Admin logo">'.
     |
     */
-    'logo-mini' => '<b>AgriHub</b>',
+    'logo-mini' => '<b>L3Fuganda</b>',
 
     /*
     |--------------------------------------------------------------------------
-    | AgriHub bootstrap setting
+    | L3Fuganda bootstrap setting
     |--------------------------------------------------------------------------
     |
-    | This value is the path of AgriHub bootstrap file.
+    | This value is the path of L3Fuganda bootstrap file.
     |
     */
     'bootstrap' => app_path('Admin/bootstrap.php'),
 
     /*
     |--------------------------------------------------------------------------
-    | AgriHub route settings
+    | L3Fuganda route settings
     |--------------------------------------------------------------------------
     |
     | The routing configuration of the admin page, including the path prefix,
@@ -71,7 +71,7 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | AgriHub install directory
+    | L3Fuganda install directory
     |--------------------------------------------------------------------------
     |
     | The installation directory of the controller and routing configuration
@@ -83,7 +83,7 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | AgriHub html title
+    | L3Fuganda html title
     |--------------------------------------------------------------------------
     |
     | Html title for all pages.
@@ -103,7 +103,7 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | AgriHub auth setting
+    | L3Fuganda auth setting
     |--------------------------------------------------------------------------
     |
     | Authentication settings for all admin pages. Include an authentication
@@ -147,7 +147,7 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | AgriHub upload setting
+    | L3Fuganda upload setting
     |--------------------------------------------------------------------------
     |
     | File system configuration for form upload files and images, including
@@ -168,10 +168,10 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | AgriHub database settings
+    | L3Fuganda database settings
     |--------------------------------------------------------------------------
     |
-    | Here are database settings for AgriHub builtin model & tables.
+    | Here are database settings for L3Fuganda builtin model & tables.
     |
     */
     'database' => [
@@ -208,7 +208,7 @@ return [
     | User operation log setting
     |--------------------------------------------------------------------------
     |
-    | By setting this option to open or close operation log in AgriHub.
+    | By setting this option to open or close operation log in L3Fuganda.
     |
     */
     'operation_log' => [
@@ -253,7 +253,7 @@ return [
     | Set a default avatar for newly created users.
     |
     */
-    'default_avatar' => '/vendor/AgriHub/AdminLTE/dist/img/user2-160x160.jpg',
+    'default_avatar' => '/vendor/L3Fuganda/AdminLTE/dist/img/user2-160x160.jpg',
 
     /*
     |--------------------------------------------------------------------------
@@ -310,7 +310,7 @@ return [
     | Show version at footer
     |--------------------------------------------------------------------------
     |
-    | Whether to display the version number of AgriHub at the footer of
+    | Whether to display the version number of L3Fuganda at the footer of
     | each page
     |
     */
@@ -403,7 +403,7 @@ return [
     |--------------------------------------------------------------------------
     |
     | You can find all available extensions here
-    | https://github.com/AgriHub-extensions.
+    | https://github.com/L3Fuganda-extensions.
     |
     */
     'extensions' => [

@@ -42,7 +42,7 @@
             <!-- end card -->
 
             <div class="mt-4 text-center">
-                <p class="mb-0">Download Agrihub App!<a target="_blank"
+                <p class="mb-0">Download L3Fuganda App!<a target="_blank"
                         href="https://play.google.com/store/apps/details?id=m.omulimisa.uganda"
                         class="fw-semibold text-primary text-decoration-underline"> Now on Playstore </a> </p>
             </div>
