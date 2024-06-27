@@ -151,7 +151,7 @@ class OnlineCourse extends Model
     }
     public static function getMyCouses($u)
     {
-        $courses = OnlineCourse::where('instructor_id', $u->id)->get();
+        $courses = OnlineCourse::where([])->get();
         foreach (OnlineCourse::all() as $key => $value) {
             if ($value->other_instructors != null) {
                 $instructors = $value->other_instructors;
