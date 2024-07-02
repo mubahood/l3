@@ -362,7 +362,9 @@ class HomeController extends Controller
     {
         $u = Admin::user();
         if ($u != 'Yes') {
-            if ($u->has_changed_password != 'Yes') {
+            $u->has_changed_password = 'Yes';
+            $u->save();
+/*             if ($u->has_changed_password != 'Yes') {
                 $token = rand(100000, 999999);
                 $u->reset_password_token = $token;
                 $u->save();
@@ -370,7 +372,7 @@ class HomeController extends Controller
                 session(['reset_password_token' => $token]);
                 Admin::script('window.location.replace("' . url('auth/password-reset-form') . '");');
                 return $content;
-            }
+            } */
         }
 
 
