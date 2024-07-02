@@ -28,7 +28,14 @@ class OnlineCourseLessonController extends AdminController
     protected function grid()
     {
         $grid = new Grid(new OnlineCourseLesson());
+        $grid->export(function ($export) {
 
+            $export->filename('Students.csv');
+
+            $export->except(['has_error', 'error_message', 'details']);
+            $export->originalValue(['status', 'attended_at', 'sheduled_at', 'reminder_date']);
+        });
+        $grid->disableBatchActions();
 
         //add on top of the grid html data
         /* $grid->header(function ($query) {
@@ -41,7 +48,7 @@ class OnlineCourseLessonController extends AdminController
         $grid->model()->orderBy('id', 'desc');
         $grid->filter(function ($filter) {
             //filter by student
-            $filter->equal('student_id', 'Student')->select(OnlineCourseStudent::pluck('name', 'id')); 
+            $filter->equal('student_id', 'Student')->select(OnlineCourseStudent::pluck('name', 'id'));
         });
 
         $u = Admin::user();
@@ -121,7 +128,7 @@ class OnlineCourseLessonController extends AdminController
                 'Attended' => 'success'
             ]);
 
-       
+
         //reminder_date
         $grid->column('reminder_date', __('Reminder Date'))
             ->display(function ($reminder_date) {
@@ -151,7 +158,7 @@ class OnlineCourseLessonController extends AdminController
             })
             ->sortable()
             ->hide();
-        $grid->column('details', __('Details'))->hide(); 
+        $grid->column('details', __('Details'))->hide();
         /* $grid->column('student_audio_question', __('Audio Question'))->sortable()
             ->display(function ($student_audio_question) {
 
@@ -167,7 +174,7 @@ class OnlineCourseLessonController extends AdminController
                 }
                 return 'No Question';
             })->hide(); */
-       /*  $grid->column('instructor_audio_question', __('Audio Answer'))->sortable()
+        /*  $grid->column('instructor_audio_question', __('Audio Answer'))->sortable()
             ->display(function ($instructor_audio_question) {
                 if ($instructor_audio_question) {
                     //check if not null and not empty

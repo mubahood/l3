@@ -188,9 +188,10 @@ Route::get('make-calls', function () {
 
     $i = 0;
     foreach ($lesssons as $key => $lessson) {
+        $i++;
         $phone = $lessson->student->phone;
         if ($lessson->status != 'Pending') {
-            echo $i . "Skipped because status is {$lessson->status}, $phone. <br>";
+            echo $i . ". Skipped because status is {$lessson->status}, $phone. <br>";
             continue;
         }
         $client = new \GuzzleHttp\Client();
@@ -207,7 +208,7 @@ Route::get('make-calls', function () {
                 'apiKey' => env('AT_KEY'),
             ]
         ]);
-        $i++;
+
         echo $i . ". Called: $phone <br>";
     }
     die("<br>====done====");
