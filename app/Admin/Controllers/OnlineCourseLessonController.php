@@ -40,7 +40,8 @@ class OnlineCourseLessonController extends AdminController
         $grid->disableCreateButton();
         $grid->model()->orderBy('id', 'desc');
         $grid->filter(function ($filter) {
-            $filter->disableIdFilter();
+            //filter by student
+            $filter->equal('student_id', 'Student')->select(OnlineCourseStudent::pluck('name', 'id')); 
         });
 
         $u = Admin::user();
