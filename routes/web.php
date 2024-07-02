@@ -521,7 +521,7 @@ Route::get('/course-student-batch-importer', function () {
     if ($course == null) {
         die("Course not found");
     }
-    $file = storage_path("" . $importer->file_path);
+    $file = public_path("storage/" . $importer->file_path);
     dd($file);
     //check if file exists  
     if (!file_exists($file)) {
