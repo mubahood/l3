@@ -104,19 +104,12 @@ class OnlineCourseLessonController extends AdminController
             })
             ->hide()
             ->sortable();
-        $grid->column('sheduled_at', __('Sheduled'))
+        /* $grid->column('sheduled_at', __('Sheduled'))
             ->display(function ($sheduled_at) {
                 return date('d M Y H:i', strtotime($sheduled_at));
             })
-            ->sortable();
-        $grid->column('attended_at', __('Attended'))
-            ->display(function ($attended_at) {
-                if ($attended_at == null || strlen($attended_at) < 2) {
-                    return 'Not attended';
-                }
-                return date('d M Y H:i', strtotime($attended_at));
-            })
-            ->sortable();
+            ->sortable(); */
+
         $grid->column('status', __('Status'))
             ->sortable()
             ->filter([
@@ -128,9 +121,17 @@ class OnlineCourseLessonController extends AdminController
                 'Attended' => 'success'
             ]);
 
+        $grid->column('attended_at', __('Attended At'))
+            ->display(function ($attended_at) {
+                if ($attended_at == null || strlen($attended_at) < 2) {
+                    return 'Not attended';
+                }
+                return date('d M Y H:i', strtotime($attended_at));
+            })
+            ->sortable();
 
         //reminder_date
-        $grid->column('reminder_date', __('Reminder Date'))
+      /*   $grid->column('reminder_date', __('Reminder Date'))
             ->display(function ($reminder_date) {
                 if ($reminder_date == null || strlen($reminder_date) < 2) {
                     return 'Not set';
@@ -138,7 +139,7 @@ class OnlineCourseLessonController extends AdminController
                 return date('d M Y H:i', strtotime($reminder_date));
             })
             ->sortable();
-
+ */
         $grid->column('has_error', __('Has error'))
             ->label([
                 'No' => 'success',
