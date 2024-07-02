@@ -120,16 +120,7 @@ class OnlineCourseLessonController extends AdminController
                 'Attended' => 'success'
             ]);
 
-        $grid->column('has_reminder_call', __('Reminder Call'))
-            ->sortable()
-            ->filter([
-                'No' => 'No',
-                'Yes' => 'Yes'
-            ])
-            ->editable('select', [
-                'No' => 'No',
-                'Yes' => 'Yes'
-            ]);
+       
         //reminder_date
         $grid->column('reminder_date', __('Reminder Date'))
             ->display(function ($reminder_date) {
@@ -159,9 +150,8 @@ class OnlineCourseLessonController extends AdminController
             })
             ->sortable()
             ->hide();
-        $grid->column('details', __('Details'))->hide();
-        $grid->column('student_quiz_answer', __('Quize Answer'))->sortable();
-        $grid->column('student_audio_question', __('Audio Question'))->sortable()
+        $grid->column('details', __('Details'))->hide(); 
+        /* $grid->column('student_audio_question', __('Audio Question'))->sortable()
             ->display(function ($student_audio_question) {
 
                 if ($student_audio_question) {
@@ -175,8 +165,8 @@ class OnlineCourseLessonController extends AdminController
                     </audio>' . "<br><a href='$student_audio_question' target='_blank'>Download</a>";
                 }
                 return 'No Question';
-            });
-        $grid->column('instructor_audio_question', __('Audio Answer'))->sortable()
+            })->hide(); */
+       /*  $grid->column('instructor_audio_question', __('Audio Answer'))->sortable()
             ->display(function ($instructor_audio_question) {
                 if ($instructor_audio_question) {
                     //check if not null and not empty
@@ -190,7 +180,7 @@ class OnlineCourseLessonController extends AdminController
                     </audio>';
                 }
                 return 'No Answer';
-            });
+            }); */
 
         $grid->column('action', __('Action'))
             ->display(function () {
