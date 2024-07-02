@@ -25,6 +25,7 @@ class OnlineCourseTopicController extends AdminController
     protected function grid()
     {
         $grid = new Grid(new OnlineCourseTopic());
+        $grid->disableBatchActions();
         $grid->filter(function ($filter) {
             $filter->disableIdFilter();
             $filter->equal('online_course_id', 'Course')->select(\App\Models\OnlineCourse::getDropDownList());
