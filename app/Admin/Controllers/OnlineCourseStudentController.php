@@ -55,16 +55,7 @@ class OnlineCourseStudentController extends AdminController
         });
 
         $u = Admin::user();
-        if ($u->isRole('instructor')) {
-            $grid->disableCreateButton();
-            $myStudents = OnlineCourse::getMyStudents($u);
-            $ids = [];
-            foreach ($myStudents as $student) {
-                $ids[] = $student['id'];
-            }
-            $grid->model()->whereIn('id', $ids);
-        }
-
+        
         $grid->quickSearch('name', 'phone')->placeholder('Search by name or phone number');
 
         $grid->column('created_at', __('Date enrolled'))
